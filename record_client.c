@@ -107,6 +107,13 @@ int main(int argc, char * argv[])
 	//create socket connection 
 	socket_create(IP,PORT);
 
+	//connect to socket
+	ret = connect(socket_id,(struct sockaddr *) &server_address,sizeof(server_address));
+	if (ret == -1)
+	{
+		perror("ERROR connecting to socket:");
+		exit(0);
+	}
 	/************************************************************************************/
 	/***************************************audio****************************************/
 	//specify the format,sampling rate and # channels to be used with audio device
@@ -118,7 +125,7 @@ int main(int argc, char * argv[])
 
 	//establish a connection with the audio device
 	//pa_simple_new(server,application name,stream direction,dev,stream_name(desc),sample_spec,channel_map,buffer_attr,error);
-	record = pa_simple_new(NULL,"record_client.c",PA_STREAM_RECORD,NULL,"recoring",&sample_spec,NULL,NULL,NULL);
+	record = pa_simple_new(NULL,"record_client.c",PA_STREAM_RECORD,NULL,"recording",&sample_spec,NULL,NULL,NULL);
 	if (record==NULL)
 	{
 		perror("ERROR connecting to audio device:");
@@ -126,18 +133,9 @@ int main(int argc, char * argv[])
 	}
 	/************************************************************************************/
 	
+	char record_buffer[BUF_SIZE],recv_buffer[100];
 	while(1)
 	{
-		unsigned char record_buffer[BUF_SIZE],recv_buffer[100];
-
-		//connect to socket
-		ret = connect(socket_id,(struct sockaddr *) &server_address,sizeof(server_address));
-		if (ret == -1)
-		{
-			perror("ERROR connecting to socket:");
-			exit(0);
-		}
-
 		//read from the audio device
 		ret = pa_simple_read(record,record_buffer,sizeof(record_buffer),NULL);
 		if (ret == -1)
@@ -147,7 +145,7 @@ int main(int argc, char * argv[])
 		}
 
 		//send the message to the server
-		ret = send(socket_id,record_buffer,strlen(record_buffer)+1,0);
+		ret = send(socket_id,record_buffer,BUF_SIZE,0);
 		if (ret==-1)
 		{
 			perror("ERROR sending data to server:");

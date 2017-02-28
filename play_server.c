@@ -105,6 +105,14 @@ int main(int argc, char * argv[])
 		perror("ERROR listening to scoket:");
 		exit(0);
 	}
+
+	//accept connection from scoket
+	client_id =  accept(socket_id,(struct sockaddr *) NULL,NULL);
+	if (client_id == -1)
+	{
+		perror("ERROR connecting to socket:");
+		exit(0);
+	}
 	/***********************************************************************/
 	/*********************************audio*********************************/
 	const pa_sample_spec sample_spec = {
@@ -122,18 +130,11 @@ int main(int argc, char * argv[])
 		exit(0);
 	}
 	/***********************************************************************/
-
+	
+	char play_buffer[BUFF_SIZE],snd_buffer[100]=":)";
 	while(1)
 	{
-		unsigned char play_buffer[BUFF_SIZE],snd_buffer[100];
 
-		//accept connection from scoket
-		client_id =  accept(socket_id,(struct sockaddr *) NULL,NULL);
-		if (client_id == -1)
-		{
-			perror("ERROR connecting to socket:");
-			exit(0);
-		}
 		//recieve data from client
 		ret = recv(client_id,play_buffer,BUFF_SIZE,0);
 		if (ret ==-1)
@@ -148,6 +149,14 @@ int main(int argc, char * argv[])
 		{
 			perror("ERROR playing audio:");
 			exit(0);;
+		}
+
+		//send acknwoledgemetn to client
+		ret = send(client_id,snd_buffer,strlen(snd_buffer)+1,0);
+		if (ret ==-1)
+		{
+			perror("ERROR sending to socket:");
+			exit(0);
 		}
 	}
 	//check all data is played 
