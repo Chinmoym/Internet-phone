@@ -139,6 +139,12 @@ int main(int argc, char * argv[])
 		ret = recv(client_id,play_buffer,BUFF_SIZE,0);
 		if (ret ==-1)
 		{
+			//client_id =  accept(socket_id,(struct sockaddr *) NULL,NULL);
+			//if (client_id == -1)
+			//{
+			//	perror("ERROR connecting to socket:");
+			//	exit(0);
+			//}
 			perror("ERROR recieving data:");
 			exit(0);
 		}
