@@ -75,12 +75,12 @@ int main()
 		}
 
 		//redirect the output to speaker (attach to STDOUT) this need to go to socket for transmission
-		ret = write(STDOUT_FILENO,buffer,sizeof(buffer));
-		if (ret==-1)
-		{
-			perror("ERROR writing:");
-			exit(0);
-		}
+		//ret = write(STDOUT_FILENO,buffer,sizeof(buffer));
+		//if (ret==-1)
+		//{
+		//	perror("ERROR writing:");
+		//	exit(0);
+		//}
 	}
 
 	//free or close the device
