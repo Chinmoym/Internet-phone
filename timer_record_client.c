@@ -5,8 +5,8 @@ Title:
 This program is a client program to take input from microphone and send the recorded voice over socket to the server
 using timer.
 
-compile: gcc record_client.c -o record_client -lpulse-simple
-execute: ./record_client [IP] [PORT]
+compile: gcc timer_record_client.c -o timer_record_client -lpulse-simple
+execute: ./timer_record_client [IP] [PORT]
 
 ********************************************************************************************************************/
 
@@ -127,7 +127,7 @@ int main(int argc, char * argv[])
 	//check if all the parameter are provided or not
 	if (argc < 3)
 	{
-		printf("Not enough parameter. Please provide IP address and Port number to connect.\nFormat ./record_client [IP] [PORT]\n");
+		printf("Not enough parameter. Please provide IP address and Port number to connect.\nFormat ./timer_record_client [IP] [PORT]\n");
 		exit(0);
 	}
 
