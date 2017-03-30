@@ -4,8 +4,8 @@ Author : Chinmoy Mohapatra (MT2016505)
 Title:
 This program is server program to paly the sound recieved from client via socket using timer
 
-compile: gcc play_server.c -o server.c -lpulse-simple
-execute: ./play_server 
+compile: gcc time_play_server_g711.c -o server -lpulse-simple
+execute: ./timer_play_server_g711 
 
 ********************************************************************************************************************/
 
