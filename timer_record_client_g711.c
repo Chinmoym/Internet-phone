@@ -5,7 +5,7 @@ Title:
 This program is a client program to take input from microphone and send the recorded voice over socket to the server
 using timer.
 
-compile: gcc record_client.c -o record_client -lpulse-simple
+compile: gcc timer_record_client_g711.c -o record_client -lpulse-simple
 execute: ./record_client [IP] [PORT]
 
 ********************************************************************************************************************/
