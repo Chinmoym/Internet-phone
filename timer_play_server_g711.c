@@ -65,7 +65,7 @@ void handler(int signo)
 	//to play audio on timer expiry
 	if (signo==SIGALRM)
 	{
-		char play_buffer[BUFF_SIZE],snd_buffer[BUFF_SIZE]=":)",decode_buffer[BUFF_SIZE];
+		uint16_t play_buffer[BUFF_SIZE],snd_buffer[BUFF_SIZE]=":)",decode_buffer[BUFF_SIZE];
 		//recieve data from client
 		// t = clock();
 		ret = recv(client_id,play_buffer,BUFF_SIZE,0);
