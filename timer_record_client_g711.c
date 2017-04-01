@@ -70,7 +70,7 @@ void handler(int signo)
 	//to record and send packets on timer expiry
 	if (signo==SIGALRM)
 	{
-		char record_buffer[BUF_SIZE],recv_buffer[BUF_SIZE],encode_buffer[BUF_SIZE];
+		uint16_t record_buffer[BUF_SIZE],recv_buffer[BUF_SIZE],encode_buffer[BUF_SIZE];
 		//read from the audio device
 		ret = pa_simple_read(record,record_buffer,BUF_SIZE,NULL);
 		if (ret == -1)
