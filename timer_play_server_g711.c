@@ -4,8 +4,8 @@ Author : Chinmoy Mohapatra (MT2016505)
 Title:
 This program is server program to paly the sound recieved from client via socket using timer
 
-compile: gcc time_play_server_g711.c -o server -lpulse-simple
-execute: ./timer_play_server_g711 
+compile: gcc play_server.c -o server.c -lpulse-simple
+execute: ./play_server 
 
 ********************************************************************************************************************/
 
@@ -25,7 +25,7 @@ execute: ./timer_play_server_g711
 #include <assert.h>
 #include <g711.c>
 
-#define BUFF_SIZE 100
+#define BUFF_SIZE 4096
 
 int ret,socket_id,client_id;
 clock_t t;
@@ -65,7 +65,7 @@ void handler(int signo)
 	//to play audio on timer expiry
 	if (signo==SIGALRM)
 	{
-		uint16_t play_buffer[BUFF_SIZE],snd_buffer[BUFF_SIZE]=":)",decode_buffer[BUFF_SIZE];
+		int16_t play_buffer[BUFF_SIZE],snd_buffer[BUFF_SIZE],decode_buffer[BUFF_SIZE];
 		//recieve data from client
 		// t = clock();
 		ret = recv(client_id,play_buffer,BUFF_SIZE,0);
@@ -84,14 +84,14 @@ void handler(int signo)
 		// t = clock()-t;
 
 		for (int i=0;i<BUFF_SIZE;i++)
-			decode_buffer[i] = ulaw2linear(play_buffer[i]);
+			decode_buffer[i] = alaw2linear(play_buffer[i]);
 
 		assert(sizeof(decode_buffer)==sizeof(play_buffer));
 
 		// printf("Recieving bandwidth = %d",(int)(BUFF_SIZE/t));
 
 		//play audio 
-		ret = pa_simple_write(play,decode_buffer,sizeof(decode_buffer),NULL);
+		ret = pa_simple_write(play,decode_buffer,BUFF_SIZE,NULL);
 		if (ret ==-1)
 		{
 			perror("ERROR playing audio:");
