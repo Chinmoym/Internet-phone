@@ -67,7 +67,7 @@ void handler(int signo)
 	{
 		int16_t play_buffer[BUFF_SIZE],snd_buffer[BUFF_SIZE],decode_buffer[BUFF_SIZE];
 		//recieve data from client
-		// t = clock();
+		t = clock();
 		ret = recv(client_id,play_buffer,BUFF_SIZE,0);
 		if (ret <=0)
 		{
@@ -81,8 +81,10 @@ void handler(int signo)
 			}
 			// exit(0);
 		}
-		// t = clock()-t;
+		t = clock()-t;
 
+		printf("Rx Bandwidth = %f bps",BUFF_SIZE/(float)(t));
+		
 		for (int i=0;i<BUFF_SIZE;i++)
 			decode_buffer[i] = alaw2linear(play_buffer[i]);
 
