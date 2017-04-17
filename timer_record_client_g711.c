@@ -86,16 +86,16 @@ void handler(int signo)
 		
 
 		//send the message to the server
-		// t = clock();
+		t = clock();
 		ret = send(socket_id,encode_buffer,BUF_SIZE,0);
 		if (ret==-1)
 		{
 			perror("ERROR sending data to server:");
 			exit(0);
 		}
-		// t = clock() -t;
+		t = clock() -t;
 
-
+		printf("Rx Bandwidth = %f bps",BUFF_SIZE/(float)(t));
 		// printf("Transmit bandwidth = %d",(int)(BUF_SIZE/t));
 		//recieve acknowledgement from server
 		// ret = recv(socket_id,recv_buffer,100,0);
